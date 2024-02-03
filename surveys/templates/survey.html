@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <title>My library</title>
+    <link rel="icon" type="image/png" href="../static/favicon.png">
+  </head>
+
+  <body>
+  		<article class="row pt-header d-flex justify-content-center" id="step2">
+			<h2 class="font_Gogh fs_40 cake_blue text-left mb-5">Опросы</h2>
+			<div class="container">
+				{% for question in questions %}
+					<div class="col">
+						<div class="card mb-3" style="max-width: 540px">
+							<div class="row no-gutters">
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title text-left mb-4">{{ question.name }}</h5>
+										<h5 class="card-title text-left mb-3">{{ question.content }}</h5>
+										<input type="text" id="response" name="Ответ" required minlength="4" maxlength="8" size="10" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				<p class="card-text"><a href="{{ survey.id }}" target="_blank">Завершить опрос</a></p>
+			</div>
+		</article>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+  </body>
+
+</html>

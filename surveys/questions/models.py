@@ -11,7 +11,7 @@ class Survey(models.Model):
 
 
 class Question(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='surveys')
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
     name = models.CharField(max_length=200)
     content = HTMLField(blank=True)
 
@@ -22,7 +22,7 @@ class Question(models.Model):
 class Response(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='questions')
-    content = HTMLField(blank=True)
+    content = models.TextField(blank=True)
 
     def __str__(self):
         return self.question.name

@@ -1,0 +1,61 @@
+<!-- Filename:index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible"
+		content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0" />
+	<title>
+		Shopping list
+	</title>
+	<style>
+        form {
+          display: flex;
+          flex-direction: column;
+          max-width: 300px;
+          margin: 0 auto;
+        }
+
+        label {
+          font-weight: bold;
+          margin-top: 10px;
+        }
+
+        input, textarea {
+          padding: 5px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          resize: none;
+        }
+
+        button {
+          margin-top: 10px;
+          padding: 5px 10px;
+          background-color: #007bff;
+          border: none;
+          color: #fff;
+          cursor: pointer;
+        }
+	</style>
+</head>
+
+<body>
+    <form method="post" action="answer/">
+		{% csrf_token %}
+		<label for="user_name">Ваше имя:</label>
+		<textarea id="user_name" name="user_name" required></textarea>
+		<label for="user_name">e-mail:</label>
+		<textarea id="user_mail" name="user_mail" required></textarea>
+		{% for question in questions %}
+		<h5 class="card-title text-left mb-3">{{ question.content }}</h5>
+
+		<label for="answer{{ question.pk }}">Ответ:</label>
+		<textarea id="answer{{ question.pk }}" name="answer{{ question.pk }}" required></textarea>
+		{% endfor %}
+
+		<button type="submit">Отправить</button>
+    </form>
+</body>
+</html>
