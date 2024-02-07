@@ -1,8 +1,8 @@
 
-from .models import Survey, Question, Response
+from .models import Survey, Question, Answer
 from more_itertools import chunked
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.contrib.auth.models import User
 
 
@@ -24,21 +24,38 @@ def survey(request, pk):
 
 def answer(request):
     counter = Question.objects.count()+1
-    answers =[]
     user_name = request.POST.get("user_name")
     user_mail = request.POST.get("user_mail")
-    user, created = User.objects.get_or_create(first_name=user_name, username=user_mail, email=user_mail)
+    user = User.objects.filter(username=user_mail).first()
+    if not user:
+        user, created = User.objects.get_or_create(first_name=user_name, username=user_mail, email=user_mail)
+    answers = []
+    survey_name = None
     for key in range(1, counter):
         answer = request.POST.get(f"answer{key}")
         if answer != None:
-            Response.objects.create(
+            question = get_object_or_404(Question, pk=key)
+            if not survey_name:
+                survey_name = question.survey.name
+
+            response = Answer.objects.create(
                 user=user,
-                question=get_object_or_404(Question, pk=key),
-                content=answers,
+                question=question,
+                content=answer,
             )
             answers.append({
-                'question_id': key,
-                'answer': answer,
+                'question': response.question.content,
+                'answer': answer.content,
             })
 
-    return HttpResponse(f"<h2>user {user_name} answers: {answers} </h2>")
+    context = {
+        'user_name': user.name,
+        'answers': answers,
+        'survey_name': survey_name,
+    }
+    return render(request, 'survey_result.html', context=context)
+    # return HttpResponsePermanentRedirect("/")
+
+
+def survey_result(request, content):
+    pass

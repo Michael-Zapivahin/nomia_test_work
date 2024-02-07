@@ -1,6 +1,9 @@
 from django.contrib import admin
-from django import forms
-from .models import Survey, Question, Response
+from .models import (
+    Survey,
+    Question,
+    Answer,
+)
 
 
 @admin.register(Survey)
@@ -8,13 +11,22 @@ class SurveyAdmin(admin.ModelAdmin):
     ordering = ['name']
 
 
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ['question', 'next_question']
+
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['survey', 'name', 'content']
+    list_display = ['name', 'content']
 
 
-# @admin.register(Response)
-# class ResponseAdmin(admin.ModelAdmin):
-#     pass
-    # list_display = ['user', 'question']
-
+# @admin.register(Answer)
+# class AnswerInLine(admin.TabularInline):
+#     model = Answer
+#
+#
+# @admin.register(Question)
+# class QuestionAdmin(admin.ModelAdmin):
+#     list_display = ['survey', 'name']
+#     inlines = [AnswerInLine]

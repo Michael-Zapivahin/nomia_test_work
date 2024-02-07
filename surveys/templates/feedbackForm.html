@@ -8,7 +8,7 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1.0" />
 	<title>
-		Shopping list
+		Survey
 	</title>
 	<style>
         form {
@@ -49,7 +49,7 @@
 		<label for="user_name">e-mail:</label>
 		<textarea id="user_mail" name="user_mail" required></textarea>
 		{% for question in questions %}
-		<h5 class="card-title text-left mb-3">{{ question.content }}</h5>
+		<h5 class="card-title text-left mb-4">{{ question.content }}</h5>
 
 		<label for="answer{{ question.pk }}">Ответ:</label>
 		<textarea id="answer{{ question.pk }}" name="answer{{ question.pk }}" required></textarea>
